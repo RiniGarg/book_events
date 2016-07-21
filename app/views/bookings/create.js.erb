@@ -1,0 +1,7 @@
+jQuery(".yes_no_event").removeClass("disabled");
+
+<% if @is_going == "true" %>
+  jQuery(".yes_event").addClass("disabled");
+<% else %>
+  jQuery(".no_event").addClass("disabled");
+<% end %>

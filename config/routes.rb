@@ -1,8 +1,33 @@
 BookEvents::Application.routes.draw do
-root to: 'static_pages#home'
-  match '/help', to: 'static_pages#help'
-  match '/about', to: 'static_pages#about'
+ root to: 'static_pages#home'
+  resources :users  do
+   resource :bookings,:events,only: [:index, :new, :create]
+   member do
+    post :make_remove_admin
+  end
+  end
+
+  resources :events
+
+  resources :sessions, only: [:new, :create, :destroy]
+
+
+  resources :events do
+   resource :bookings, :users, only: [:index, :new, :create]
+  end
+
+  resources :categories 
+  resources :bookings
+  
+
+  match '/signup',  to: 'users#new'
+  match '/signin',  to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy', via: :delete
+
+  match '/help',    to: 'static_pages#help'
+  match '/about',   to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

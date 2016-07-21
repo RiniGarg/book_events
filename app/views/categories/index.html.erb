@@ -1,0 +1,20 @@
+<% provide(:title, 'All Categories') %>
+<h1>All Categories</h1>
+
+<%= will_paginate %>
+
+<ul class="categories">
+  <%= render @categories %>
+</ul>
+
+<%= will_paginate %>
+
+<div class="navbar-inner">
+    <div class="container">
+     <nav>
+        <ul class="nav pull-middle">
+<li><%= link_to "add category",new_category_path%></li>
+</ul>
+      </nav>
+    </div>
+  </div>

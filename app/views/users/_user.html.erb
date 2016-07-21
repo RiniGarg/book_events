@@ -1,0 +1,14 @@
+<li>
+<%= form_for(current_user) do |f| %>
+  <%= link_to user.name, user %>
+  <% if current_user.admin? && !current_user?(user) %>
+    | <%= link_to "delete", user, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+     <% if current_user.admin? && !current_user?(user) && !user.admin?%>
+    | <%= link_to "make_admin", "#",class: " make_remove_admin make_admin btn btn-large btn-primary ", data: {url:"#{make_remove_admin_user_path(user)}" } %>
+      <% elsif current_user.admin? && !current_user?(user) && user.admin?%>
+       <%= link_to "remove_admin", "#",class: " make_remove_admin remove_admin btn btn-large btn-primary ", data: {url:"#{make_remove_admin_user_path(user)}" } %>
+<% end %>
+  <% end %>
+  <% end %>
+</li>
