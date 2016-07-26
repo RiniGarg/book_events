@@ -1,21 +1,30 @@
 <% provide(:title, 'All events') %>
 <h1 class="header_name">All events</h1>
+  
 
-<div style="width:100%;">
-<div style="float:left; width:40%;">
-  <%= form_for :category, format: :js, url: events_path, method: :get, remote: true, :html => {:id => "filter_category"} do |f| %>
-    <%= f.label :choose_catgeory %>
-    <%= f.collection_select :id, Category.order(:name),:id,:name,  {:prompt => 'Select Category'}, id: "events_category_list" %>
-  <% end %>
-  <div>
-  <% if signed_in_admin? %>
-    <li><%= link_to "add event",new_event_path%></li>
-  <%end%>
-</div>
-</div>
+<div >
 
-<div style="float:left; width:60%; margin-middle:10px;" id="events_container">
- <%= render 'event_show', :locals => {events: @events} %>
-</div>
+<div style="margin-left:80%;">
+    <% if signed_in_admin? %>
+      <li><%= link_to "add event",new_event_path%></li>
+    <%end%>
+  </div>
+  <div class="clearfix">
+    <div style="float:left;margin-top:40px;margin-bottom:40px;">
+      <%= form_for :category, format: :js, url: events_path, method: :get, remote: true, :html => {:id => "filter_category"} do |f| %>
+        <%= f.label :choose_category %>
+        <%= f.collection_select :id, Category.order(:name),:id,:name,  {:prompt => 'Select Category'}, id: "events_category_list" %>
+      <% end %>
+    </div>
+
+
+    <div style="float:left;margin-left:200px;min-height: 400px;" id="events_container">
+     <%= render 'event_show', :locals => {events: @events} %>
+    </div>
+    
+  </div>
+
+
+  
 
 </div>

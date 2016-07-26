@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
- before_filter :signed_in_user, only: [:edit, :update]
- before_filter :correct_user,   only: [:edit, :update]
+ before_filter :signed_in_user, only: [:edit, :update, :reset_password]
+ before_filter :correct_user,   only: [:edit, :update, :reset_password]
 
  def index
   @users = User.paginate(page: params[:page])
@@ -22,7 +22,7 @@ def create
 end
 
 def edit
-
+@user = User.find(params[:id])
 end
 
 def destroy
@@ -32,6 +32,7 @@ def destroy
 end
 
 def update
+  @user = User.find(params[:id])
   if @user.update_attributes(params[:user])
     flash[:success] = "Profile updated"
     sign_in @user
@@ -43,7 +44,8 @@ end
 
 def show
  @user = User.find(params[:id])
- @bookings = @user.bookings
+ @bookings = @user.bookings.paginate(page: params[:page])
+ @events=@user.events.paginate(page: params[:page])
 end
 
 def make_remove_admin
@@ -51,6 +53,29 @@ def make_remove_admin
  @user.update_attribute(:admin, params[:is_admin])
 render :nothing => true
 end
+
+def reset_password
+  @user=User.find(params[:id])
+  render 'reset_password'
+end
+
+def update_password
+user = User.find(params[:id]) 
+if user && user.authenticate(params[:user][:old_password])
+    if params[:user][:password] == params[:user][:password_confirmation]
+      user.update_attribute(:password, params[:user][:password_confirmation])
+        sign_out
+        redirect_to '/signin'
+    else
+        redirect_to reset_password_user_path(user)
+        flash[:error] = "Incorrect Password Confirmation"
+    end
+else
+    redirect_to reset_password_user_path(user)
+      flash[:error] = "Incorrect Old Password"
+end
+end
+
 
 private
 

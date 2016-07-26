@@ -1,9 +1,21 @@
 <% provide(:title, @category.name) %>
-<div class="row">
-  <aside class="span4">
-    <section>
-<h1>
-  <%= @category.name %>
-</h1>
-</section>
+<div>
+  <div>
+      <div style="float:left; width:42%;"><%= gravatar_for @category %></div>
+      <div style="float:left;margin-left:0.3px">
+        <h2 class="header_name"><%=@category.name%></h2>
+         <p><%=@category.description%></p>
+      </div>
+    
+  </div>
+
+  <div style="margin-bottom:20px;margin-top:20px;">
+    <% if current_user.admin? %>
+  <%= link_to "edit", edit_category_path(@category) %>
+    | <%= link_to "delete", @category, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+  <% end %>
+  </div>
+
 </div>
+

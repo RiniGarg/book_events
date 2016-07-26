@@ -1,3 +1,10 @@
-<li>
-  <%= link_to event.name, event %>
-</li>
+    <div style="margin-top:20px;">
+     <div style="float:left; width:33%;"><%= link_to gravatar_for event%></div>
+    <div style="float:left;">
+      <div><%= link_to event.name, event %></div>
+      <p style="float:left;">
+      <%=event.description%>
+      </p>
+    </div>
+    </div>
+

@@ -1,25 +1,25 @@
 <% provide(:title, @event.name) %>
 <div>
   <div>
-    <div style="float:left; width:42%;"><%= gravatar_for @event %></div>
-    <div style="float:left;margin-left:0.3px">
-      <h2 class="header_name"><%=@event.name%></h2>
-      <h3><%=@event.venue%></h3>
-      <h4><%=@event.category%></h4>
-       <h5><%=@event.category%></h5>
-       <h6><%=@event.category%></h6>
-      <p><%=@event.description%></p>
-    </div>
+      <div style="float:left; width:42%;"><%= gravatar_for @event %></div>
+      <div style="float:left;margin-left:0.3px">
+        <h2 class="header_name"><%=@event.name%></h2>
+        <h3><%=@event.venue%></h3>
+        <h4><%=@event.end_date_time%></h4>
+         <h5><%=@event.start_date_time%></h5>
+         <h6><%=@event.description%></h6>
+      </div>
     
   </div>
 
-  <div style="margin-bottom:20px;margin-top:20px">
+  <div style="margin-bottom:20px;margin-top:20px;">
     <% if current_user.admin? %>
       <%= link_to "edit", edit_event_path(@event)%>
        | <%= link_to "delete", @event, method: :delete,
                                     data: { confirm: "You sure?" } %>
     <% end %>
   </div>
+
   <div >
     <%= link_to "Yes", "#",class: " yes_no_event yes_event btn btn-primary ", data: {url:"#{bookings_path({:event_id => @event.id,:user_id =>current_user.id,:format=>:js})}" } %>
     <%= link_to "No", "#",class: " yes_no_event no_event btn btn-primary", data: {url:"#{bookings_path({:event_id => @event.id,:user_id =>current_user.id,:format=>:js})}" } %> 

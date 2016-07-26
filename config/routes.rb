@@ -4,6 +4,8 @@ BookEvents::Application.routes.draw do
    resource :bookings,:events,only: [:index, :new, :create]
    member do
     post :make_remove_admin
+    get :reset_password
+    put :update_password
   end
   end
 
@@ -20,6 +22,7 @@ BookEvents::Application.routes.draw do
   resources :bookings
   
 
+
   match '/signup',  to: 'users#new'
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
@@ -27,6 +30,7 @@ BookEvents::Application.routes.draw do
   match '/help',    to: 'static_pages#help'
   match '/about',   to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
+  mount Ckeditor::Engine => '/ckeditor'
 
 
   # The priority is based upon order of creation:

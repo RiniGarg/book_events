@@ -4,6 +4,8 @@
 <div class="row">
   <div class="span6 offset3">
     <%= form_for(@user) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+
 
       <%= f.label :name %>
       <%= f.text_field :name %>
@@ -12,7 +14,7 @@
       <%= f.text_field :email %>
 
 
-      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+       <div style=" margin-top:5px;"> <%= f.submit "Save changes", class: "btn btn-large btn-primary" %> </div>
     <% end %>
   </div>
 </div>

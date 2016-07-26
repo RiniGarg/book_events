@@ -4,11 +4,17 @@
 <div class="row">
   <div class="span6 offset3">
     <%= form_for(@category) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+
 
       <%= f.label :name %>
       <%= f.text_field :name %>
 
-      <%= f.submit "Create Category", class: "btn btn-large btn-primary" %>
+      <%= f.label :description %>
+      <%= f.cktext_area  :description %>
+
+
+      <div style="margin-top:5px;"><%= f.submit "Create Category", class: "btn btn-large btn-primary" %></div>
     <% end %>
   </div>
 </div>

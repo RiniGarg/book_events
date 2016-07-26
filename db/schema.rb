@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160719112745) do
+ActiveRecord::Schema.define(:version => 20160725152146) do
 
   create_table "bookings", :force => true do |t|
     t.integer  "user_id"
@@ -23,8 +23,9 @@ ActiveRecord::Schema.define(:version => 20160719112745) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "description"
   end
 
   create_table "events", :force => true do |t|
@@ -47,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20160719112745) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.boolean  "admin",           :default => false
+    t.integer  "bookings_count",  :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

@@ -1,16 +1,21 @@
 <% provide(:title, "Edit Category") %>
-<h1>Update the category<h1>
+<h1>Update the Category<h1>
 
 <div class="row">
-  <div class="span6 offset3">
+  <div class="span4 offset5">
     <%= form_for(@category) do |f| %>
-     
+     <%= render 'shared/error_messages', object: f.object %>
+
 
       <%= f.label :name %>
       <%= f.text_field :name %>
 
+      <%= f.label :description %>
+      <%= f.cktext_area :description %>
 
-      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+
+
+     <div style=" margin-top:5px;"> <%= f.submit "Save changes", class: "btn btn-large btn-primary" %></div>
     <% end %>
   </div>
 </div>

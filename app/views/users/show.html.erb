@@ -1,19 +1,26 @@
 <% provide(:title, @user.name) %>
-<div class="row">
-  <aside class="span4">
-    <section>
-      <h1>
-        <%= @user.name %>
-      </h1>
-    </section>
-  </aside>
-   <div class="span8">
+  <div style="width:30em;height:18em;margin-top: 3em; margin-left: 23em; ">
+    <div style="float:left; width:30%;font-weight: bold;font-size:3em;"><%= @user.name%>
+    </div>
+    <div style="float:left;">
+      <% if current_user.admin? && !current_user?(@user) %>
+           <%= link_to "delete", @user, method: :delete,
+                                        data: { confirm: "You sure?" } %>
+      <% end %>
+    </div>
+    <div style="float:left;margin-left:30px;">
+        <% if current_user.admin? && !current_user?(@user) && !@user.admin?%>
+         <%= link_to "Make Admin", "#",class: " make_remove_admin make_admin btn btn-large btn-primary ", data: {url:"#{make_remove_admin_user_path(@user)}" } %>
+        <% elsif current_user.admin? && !current_user?(@user) && @user.admin?%>
+         <%= link_to "Remove Admin", "#",class: " make_remove_admin remove_admin btn btn-large btn-primary ", data: {url:"#{make_remove_admin_user_path(@user)}" } %>
+        <% end %>
+    </div>
+  </div>  
+  <div>
     <% if @user.bookings.any? %>
-      <h3>events (<%= @user.bookings.count %>)</h3>
+      <h3>events (<%= @user.bookings_count %>)</h3>
       <ol class="events">
-        <%#= render @bookings %>
+        <%render 'events/event_show' %>
       </ol>
-      <%#= will_paginate @bookings %>
     <% end %>
   </div>
-</div>

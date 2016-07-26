@@ -1,19 +1,20 @@
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation
+  attr_accessible :name, :email, :password, :password_confirmation, :new_password, 
+  :old_password,:admin,:bookings_count
 
-  has_many :bookings
+  has_many :bookings,dependent: :destroy
   has_many :events, through: :bookings
   has_secure_password
   before_save { |user| user.email = email.downcase }
-  before_save :create_remember_token
+  before_create :create_remember_token
 validates :name, presence: true, length:{maximum:50},uniqueness: { case_sensitive: false }
 VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence:   true,
                     format:     { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-  validates :password, presence: true, length: { minimum: 6 }
-  validates :password_confirmation, presence: true
-  validates :admin, presence: true
+  #validates :password, presence: true, length: { minimum: 6 }
+  #validates :password_confirmation, presence: true
+  #validates :admin, presence: true
 
   private
 

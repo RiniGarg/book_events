@@ -36,7 +36,6 @@ before_filter :signed_in_user_admin, only: [:edit, :update]
     end
 
     def update
-      #byebug
       @categories=Category.paginate(page: params[:page])
     	@category = Category.find(params[:id])
     if @category.update_attributes(params[:category])
