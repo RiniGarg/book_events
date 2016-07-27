@@ -7,14 +7,28 @@ class User < ActiveRecord::Base
   has_secure_password
   before_save { |user| user.email = email.downcase }
   before_create :create_remember_token
-validates :name, presence: true, length:{maximum:50},uniqueness: { case_sensitive: false }
-VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :name, presence: true, length:{maximum:50},uniqueness: { case_sensitive: false }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence:   true,
                     format:     { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-  #validates :password, presence: true, length: { minimum: 6 }
-  #validates :password_confirmation, presence: true
-  #validates :admin, presence: true
+  
+  def is_attending?(event_id)
+    self.bookings.where(event_id: event_id, going_id: true).present?
+  end
+
+  def is_not_attending?(event_id)
+    self.bookings.where(event_id: event_id, going_id: false).present?
+  end
+
+  def attending_count
+    self.bookings.where( going_id: true).count
+  end
+
+  def attending_bookings
+    self.bookings.where( going_id: true)
+  end
+
 
   private
 

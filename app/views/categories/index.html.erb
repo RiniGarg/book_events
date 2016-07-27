@@ -1,17 +1,19 @@
 <% provide(:title, 'All Categories') %>
 <h1 class="header_name">All Categories</h1>
-<div>
- <div style="float:left; margin-top:25px;margin-left:25px;">
-    <%= link_to "add category",new_category_path%>
+<div style="min-height:500px;">
+ <div class="clearfix" style="margin-left:80%;margin-right:25px">
+    <% if current_user.admin? %>
+      <div class="pull-right">
+        <%= link_to "Add Category",new_category_path %>
+      </div>
+    <% end %>
   </div>
 
-  <div style="float:left; margin-left:285px;">
-
+  <div>
     <%= will_paginate %>
-
-    <ul class="categories">
+    <div class="categories">
       <%= render @categories %>
-    </ul>
+    </div>
     <%= will_paginate %>
   </div>
 </div>

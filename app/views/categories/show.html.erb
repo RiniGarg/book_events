@@ -1,10 +1,15 @@
 <% provide(:title, @category.name) %>
-<div>
+<div style="min-height:500px;">
   <div>
-      <div style="float:left; width:42%;"><%= gravatar_for @category %></div>
-      <div style="float:left;margin-left:0.3px">
-        <h2 class="header_name"><%=@category.name%></h2>
-         <p><%=@category.description%></p>
+      <div style="margin-left:0.3px">
+        <div style="margin-top:20px">
+            <h> Name: </h>
+            <%=@category.name%>
+          </div>
+          <div style="margin-top:20px">
+            <h> Description: </h>
+            <%=raw(@category.description)%>
+          </div>
       </div>
     
   </div>

@@ -19,10 +19,6 @@ def update_counter_cache
   
   self.event.bookings_count = Booking.where({:going_id => true, :event_id =>self.event_id }).count
   self.event.save!
-
-  user = User.find(self.user_id)
-  user.bookings_count = Booking.where({:going_id => true, :user_id =>self.user_id }).count
-  user.save!
 end
 
 end

@@ -1,26 +1,39 @@
 <% provide(:title, @user.name) %>
-  <div style="width:30em;height:18em;margin-top: 3em; margin-left: 23em; ">
-    <div style="float:left; width:30%;font-weight: bold;font-size:3em;"><%= @user.name%>
-    </div>
-    <div style="float:left;">
-      <% if current_user.admin? && !current_user?(@user) %>
-           <%= link_to "delete", @user, method: :delete,
-                                        data: { confirm: "You sure?" } %>
-      <% end %>
-    </div>
-    <div style="float:left;margin-left:30px;">
+<h1 class="header_name">Profile</h1>
+<div style="min-height:500px;">
+  <div class="clearfix" style="margin-left:80%;margin-right:25px">
+    <div class="pull-right">
+        <% if current_user.admin? && !current_user?(@user) %>
+             <%= link_to "Delete", @user, method: :delete,
+                                          data: { confirm: "You sure?" } %> |
+        <% end %>
         <% if current_user.admin? && !current_user?(@user) && !@user.admin?%>
-         <%= link_to "Make Admin", "#",class: " make_remove_admin make_admin btn btn-large btn-primary ", data: {url:"#{make_remove_admin_user_path(@user)}" } %>
+         <%= link_to "Make Admin", "#",class: " make_remove_admin make_admin  ", data: {url:"#{make_remove_admin_user_path(@user)}" } %>
         <% elsif current_user.admin? && !current_user?(@user) && @user.admin?%>
-         <%= link_to "Remove Admin", "#",class: " make_remove_admin remove_admin btn btn-large btn-primary ", data: {url:"#{make_remove_admin_user_path(@user)}" } %>
+         <%= link_to "Remove Admin", "#",class: " make_remove_admin remove_admin  ", data: {url:"#{make_remove_admin_user_path(@user)}" } %>
         <% end %>
     </div>
-  </div>  
-  <div>
-    <% if @user.bookings.any? %>
-      <h3>events (<%= @user.bookings_count %>)</h3>
-      <ol class="events">
-        <%render 'events/event_show' %>
-      </ol>
-    <% end %>
   </div>
+  <div class="user_details clearfix">
+    <div class="span3"><%= gravatar_for @user %></div>
+    <div class="span8">
+      <div><strong>Name:</strong> <%= @user.name%></div>
+      <div><strong>Email:</strong> <%= @user.email%></div>
+    </div>
+  </div>
+  <div class="has-above-4">
+    <div class="span11">
+      <% if @user.attending_bookings.present? %>
+        <strong>Events Attending (<%= @user.attending_count %>)</strong>
+        <hr class="no-margin"/>
+          <ul>
+          <% @user.attending_bookings.each do |booking| %>
+            <li class="has-above-1">
+              <%= link_to booking.event.name, booking.event %>
+            </li>
+          <% end %>
+          </ul>
+      <% end %>
+    </div>
+  </div>
+</div>

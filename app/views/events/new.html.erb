@@ -1,25 +1,26 @@
 <% provide(:title, 'Create Event') %>
 <h1 >Create Event</h1>
+<div style="min-height:500px;">
+  <div class="row">
+    <div class="span6 offset3">
+      <%= form_for(@event) do |f| %>
+     <%= render 'shared/error_messages', object: f.object %>
 
-<div class="row">
-  <div class="span6 offset3">
-    <%= form_for(@event) do |f| %>
-   <%= render 'shared/error_messages', object: f.object %>
 
+        <%= f.label :name %>
+        <%= f.text_field :name %>
 
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+        <%= f.label :description %>
+        <%= f.cktext_area  :description %>
 
-      <%= f.label :description %>
-      <%= f.cktext_area  :description %>
+        <%= f.label :venue %>
+        <%= f.text_field  :venue %>
 
-      <%= f.label :venue %>
-      <%= f.text_field  :venue %>
+         <%= f.label :choose_Category %>
+        <%= f.collection_select :category_id, Category.order(:name),:id,:name, include_blank: true %>
 
-       <%= f.label :choose_Category %>
-      <%= f.collection_select :category_id, Category.order(:name),:id,:name, include_blank: true %>
-
-      <div style=" margin-top:5px;"> <%= f.submit "Create Event", class: "btn btn-large btn-primary" %></div>
-    <% end %>
+        <div style=" margin-top:5px;"> <%= f.submit "Create Event", class: "btn btn-large btn-primary" %></div>
+      <% end %>
+    </div>
   </div>
-</div>
+</div>  

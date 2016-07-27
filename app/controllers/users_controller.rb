@@ -11,11 +11,12 @@ def new
 end
 
 def create
-  @user = User.new(params[:user])
+  @events = Event.paginate(page: params[:page])
+  @user = User.new(params[:user])  
   if @user.save
     sign_in @user
     flash[:success] = "Welcome to BookmyEvents App!"
-    redirect_to @user
+    redirect_to events_path
   else
    render 'new'
  end
@@ -32,8 +33,10 @@ def destroy
 end
 
 def update
-  @user = User.find(params[:id])
-  if @user.update_attributes(params[:user])
+  @user = User.find(params[:id])  
+  @user.name = params[:user][:name]
+  @user.email = params[:user][:email]
+  if @user.save
     flash[:success] = "Profile updated"
     sign_in @user
     redirect_to @user
@@ -44,7 +47,6 @@ end
 
 def show
  @user = User.find(params[:id])
- @bookings = @user.bookings.paginate(page: params[:page])
  @events=@user.events.paginate(page: params[:page])
 end
 

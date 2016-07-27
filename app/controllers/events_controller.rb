@@ -2,7 +2,7 @@ class EventsController < ApplicationController
 	before_filter :signed_in_user_admin, only: [:edit, :update]
 
 	def index
-    if params.has_key?(:category)
+    if params.has_key?(:category) && params[:category][:id].present?
      @category = Category.find(params[:category][:id] )
      @events = @category.events.paginate(page: params[:page])
     else
@@ -21,6 +21,7 @@ class EventsController < ApplicationController
 	def create
 		@event = Event.new(params[:event])
 	    if @event.save
+        @events = Event.paginate(page: params[:page])
 	    	flash[:success] = "Event created!"
 	        render 'index'
 	    else

@@ -37,8 +37,8 @@ before_filter :signed_in_user_admin, only: [:edit, :update]
 
     def update
       @categories=Category.paginate(page: params[:page])
-    	@category = Category.find(params[:id])
-    if @category.update_attributes(params[:category])
+    	category = Category.find(params[:id])
+    if category.update_attributes(params[:category])
       flash[:success] = "Category updated"
       render 'index'
     else

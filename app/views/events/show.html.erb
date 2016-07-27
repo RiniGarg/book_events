@@ -1,27 +1,32 @@
 <% provide(:title, @event.name) %>
-<div>
-  <div>
-      <div style="float:left; width:42%;"><%= gravatar_for @event %></div>
-      <div style="float:left;margin-left:0.3px">
-        <h2 class="header_name"><%=@event.name%></h2>
-        <h3><%=@event.venue%></h3>
-        <h4><%=@event.end_date_time%></h4>
-         <h5><%=@event.start_date_time%></h5>
-         <h6><%=@event.description%></h6>
-      </div>
-    
-  </div>
-
-  <div style="margin-bottom:20px;margin-top:20px;">
+<div class="has-below-4">
+  <div style="margin-left:80%;margin-right:25px">
     <% if current_user.admin? %>
-      <%= link_to "edit", edit_event_path(@event)%>
-       | <%= link_to "delete", @event, method: :delete,
-                                    data: { confirm: "You sure?" } %>
+      <div class="pull-right">
+        <%= link_to "Edit", edit_event_path(@event)%>
+        | <%= link_to "Delete", @event, method: :delete, data: { confirm: "You sure?" } %>
+      </div>
     <% end %>
+  </div>
+  <div>
+
+    <div>
+      <h4><%=@event.name%></h4>
+    </div>
+    <div style="margin-top:20px">
+      <strong> Venue: </strong>
+      <%=raw(@event.venue)%>
+    </div>
+    <div style="margin-top:20px">
+      <strong> Description: </strong>
+      <%=raw(@event.description)%>
+    </div>
+
   </div>
 
   <div >
-    <%= link_to "Yes", "#",class: " yes_no_event yes_event btn btn-primary ", data: {url:"#{bookings_path({:event_id => @event.id,:user_id =>current_user.id,:format=>:js})}" } %>
-    <%= link_to "No", "#",class: " yes_no_event no_event btn btn-primary", data: {url:"#{bookings_path({:event_id => @event.id,:user_id =>current_user.id,:format=>:js})}" } %> 
+    <%= link_to "Yes", "javascript:void(0);",class: " yes_no_event yes_event btn btn-primary #{'disabled' if current_user.is_attending?(@event.id)}", data: {url:"#{bookings_path({:event_id => @event.id,:user_id =>current_user.id,:format=>:js})}" } %>
+    <%= link_to "No", "javascript:void(0);",class: " yes_no_event no_event btn btn-danger #{'disabled' if current_user.is_not_attending?(@event.id)}", data: {url:"#{bookings_path({:event_id => @event.id,:user_id =>current_user.id,:format=>:js})}" } %> 
   </div>  
+
 </div>
